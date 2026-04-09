@@ -6,9 +6,10 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class ProductsTable
 {
@@ -16,23 +17,47 @@ class ProductsTable
     {
         return $table
             ->columns([
-                textColumn::make('title')
+                TextColumn::make('shop_id')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('title')
                     ->searchable(),
-                textColumn::make('description')
-                    ->searchable()
-                    ->limit(50),
-                textColumn::make('price')
-                    ->money('usd')
+                TextColumn::make('slug')
+                    ->searchable(),
+                TextColumn::make('price')
+                    ->money()
+                    ->sortable(),
+                TextColumn::make('original_price')
+                    ->money()
                     ->sortable(),
                 TextColumn::make('stock')
+                    ->numeric()
                     ->sortable(),
-                textColumn::make('created_at')
+                TextColumn::make('brand')
+                    ->searchable(),
+                TextColumn::make('size')
+                    ->searchable(),
+                TextColumn::make('category_id')
+                    ->numeric()
+                    ->sortable(),
+                ImageColumn::make('image_url'),
+                ImageColumn::make('image_url_2'),
+                ImageColumn::make('image_url_3'),
+                ImageColumn::make('image_url_4'),
+                IconColumn::make('is_new')
+                    ->boolean(),
+                TextColumn::make('currency')
+                    ->searchable(),
+                IconColumn::make('is_active')
+                    ->boolean(),
+                TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable(),
-                ImageColumn::make('image_url')
-                    ->label('Imagen')
-                    ->square(),
-
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
