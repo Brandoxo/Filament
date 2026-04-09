@@ -10,6 +10,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Models\Shop;
 
 class ProductsTable
 {
@@ -18,7 +19,12 @@ class ProductsTable
         return $table
             ->columns([
                 TextColumn::make('shop_id')
-                    ->numeric()
+                    ->label('Tienda')
+                    ->formatStateUsing(function ($state) {
+                        $shop = Shop::find($state);
+                        return $shop ? $shop->name : 'N/A';
+                    })
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),
