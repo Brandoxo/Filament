@@ -3,16 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Filament\Panel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles; 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
-class User extends Authenticatable 
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +54,6 @@ class User extends Authenticatable
     {
         // Aquí puedes implementar tu lógica de autorización personalizada
         // Por ejemplo, podrías verificar el rol del usuario o cualquier otra condición
-        return str_ends_with($this->email, '@bankzar.com') && $this->is_admin;
+        return str_ends_with($this->email, '@bankzar.com') && $this->hasRole('super_admin');
     }
 }
