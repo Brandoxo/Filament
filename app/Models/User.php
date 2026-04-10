@@ -54,6 +54,6 @@ class User extends Authenticatable implements FilamentUser
     {
         // Aquí puedes implementar tu lógica de autorización personalizada
         // Por ejemplo, podrías verificar el rol del usuario o cualquier otra condición
-        return str_ends_with($this->email, '@bankzar.com') && $this->hasRole('super_admin');
+        return /* str_ends_with($this->email, '@bankzar.com') && */ $this->hasRole('super_admin');
     }
 }

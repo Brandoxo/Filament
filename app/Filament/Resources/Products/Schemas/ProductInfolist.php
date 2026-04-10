@@ -34,12 +34,16 @@ class ProductInfolist
                     ->numeric()
                     ->placeholder('-'),
                 ImageEntry::make('image_url')
+                    ->disk('r2')
                     ->placeholder('-'),
                 ImageEntry::make('image_url_2')
+                    ->disk('r2')
                     ->placeholder('-'),
                 ImageEntry::make('image_url_3')
+                    ->disk('r2')
                     ->placeholder('-'),
                 ImageEntry::make('image_url_4')
+                    ->disk('r2')
                     ->placeholder('-'),
                 IconEntry::make('is_new')
                     ->boolean()

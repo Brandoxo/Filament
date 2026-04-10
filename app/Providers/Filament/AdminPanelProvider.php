@@ -26,7 +26,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->brandName('Bankzar CMS')
+            ->brandName('Bankzar Admin Panel')
             ->id('admin')
             ->path('admin')
             ->login()

@@ -46,10 +46,14 @@ class ProductsTable
                 TextColumn::make('category_id')
                     ->numeric()
                     ->sortable(),
-                ImageColumn::make('image_url'),
-                ImageColumn::make('image_url_2'),
-                ImageColumn::make('image_url_3'),
-                ImageColumn::make('image_url_4'),
+                IconColumn::make('image_url')
+                    ->boolean(),
+                IconColumn::make('image_url_2')
+                    ->boolean(),
+                IconColumn::make('image_url_3')
+                    ->boolean(),
+                IconColumn::make('image_url_4')
+                    ->boolean(),
                 IconColumn::make('is_new')
                     ->boolean(),
                 TextColumn::make('currency')
