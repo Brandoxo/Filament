@@ -9,6 +9,7 @@ class Look extends Model
     protected $fillable = [
         'title',
         'description',
+        'image_url',
         'price',
         'is_active'
     ];

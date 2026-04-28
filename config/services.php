@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    'cloudflare' => [
+        'account_id' => env('CLOUDFLARE_ACCOUNT_ID'),
+        'api_token'  => env('CLOUDFLARE_API_TOKEN'),
+    ],
+
+    'gemini' => [
+        'api_key' => env('GEMINI_API_KEY'),
+    ],
+
+    'huggingface' => [
+        'api_token' => env('HF_API_TOKEN'),
+    ],
+
 ];

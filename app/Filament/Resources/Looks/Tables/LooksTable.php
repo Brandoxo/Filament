@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Looks\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -15,6 +16,13 @@ class LooksTable
     {
         return $table
             ->columns([
+                ImageColumn::make('image_url')
+                    ->label('AI Image')
+                    ->height(64)
+                    ->width(64)
+                    ->defaultImageUrl(null)
+                    ->extraImgAttributes(['class' => 'rounded object-cover']),
+
                 TextColumn::make('title')
                     ->label('Título')
                     ->searchable()
