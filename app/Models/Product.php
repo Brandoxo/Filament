@@ -59,6 +59,24 @@ class Product extends Model
         return $images;
     }
 
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
+
+    public function looks()
+    {
+        return $this->belongsToMany(Look::class);
+    }
 
 }
