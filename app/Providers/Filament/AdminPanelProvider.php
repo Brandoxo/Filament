@@ -26,7 +26,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->brandName('Filament')
+            ->brandName('Bankzar Admin')
             ->id('admin')
             ->path('admin')
             ->login()
