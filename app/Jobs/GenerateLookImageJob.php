@@ -61,6 +61,7 @@ class GenerateLookImageJob implements ShouldQueue
                 . 'I will show you images of garments that belong to a single styled look. '
                 . 'For EACH item, describe it with forensic precision: '
                 . 'exact garment type, every visible color and color-blocking detail, print or pattern (name it exactly), fabric texture and weight, '
+                . 'all visible design details like collar type, collar color, collar contrast, neckline style, sleeve length and shape, closure type and hardware (buttons, zippers, buckles — material and finish) will be included, '
                 . 'collar/neckline style, sleeve length and shape, closure type and hardware (buttons, zippers, buckles — material and finish), '
                 . 'pocket placement, hem style, waistband, lining, any visible stitching details, embroidery, patches, logos, or text. '
                 . 'Do NOT generalize. Do NOT omit any visible element. '
