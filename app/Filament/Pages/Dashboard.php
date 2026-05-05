@@ -4,8 +4,9 @@ namespace App\Filament\Pages;
 
 use App\Filament\Widgets\BazarStatsOverview;
 use App\Filament\Widgets\OrdersChartWidget;
+use App\Filament\Widgets\PendingOrdersWidget;
+use App\Filament\Widgets\RecentOrdersWidget;
 use Filament\Pages\Dashboard as BaseDashboard;
-use Illuminate\Contracts\View\View;
 
 class Dashboard extends BaseDashboard
 {
@@ -15,16 +16,13 @@ class Dashboard extends BaseDashboard
 
     protected static ?string $title = 'Dashboard';
 
-    public function getHeader(): ?View
-    {
-        return view('components.bazar-welcome-banner');
-    }
-
     public function getHeaderWidgets(): array
     {
         return [
             BazarStatsOverview::class,
             OrdersChartWidget::class,
+            PendingOrdersWidget::class,
+            RecentOrdersWidget::class,
         ];
     }
 
@@ -33,7 +31,7 @@ class Dashboard extends BaseDashboard
         return [
             'default' => 1,
             'sm'      => 1,
-            'lg'      => 3,
+            'lg'      => 1,
         ];
     }
 }

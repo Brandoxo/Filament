@@ -13,12 +13,12 @@ class BazarStatsOverview extends BaseWidget
 
     protected function getStats(): array
     {
-        $paid = ['paid', 'shipped', 'completed'];
+        $delivered = ['delivered', 'shipped', 'completed'];
 
         // ── Total de Ventas ──────────────────────────────────────────
-        $totalVentas        = (float) Order::whereIn('status', $paid)->sum('total_amount');
-        $ventasEstaSemana   = (float) Order::whereIn('status', $paid)->where('created_at', '>=', now()->startOfWeek())->sum('total_amount');
-        $ventasSemanaAnterior = (float) Order::whereIn('status', $paid)
+        $totalVentas        = (float) Order::whereIn('status', $delivered)->sum('total_amount');
+        $ventasEstaSemana   = (float) Order::whereIn('status', $delivered)->where('created_at', '>=', now()->startOfWeek())->sum('total_amount');
+        $ventasSemanaAnterior = (float) Order::whereIn('status', $delivered)
             ->whereBetween('created_at', [now()->subWeek()->startOfWeek(), now()->subWeek()->endOfWeek()])
             ->sum('total_amount');
         $tendencia = $ventasSemanaAnterior > 0
@@ -27,11 +27,11 @@ class BazarStatsOverview extends BaseWidget
 
         // ── Prendas Vendidas (items JSON) ────────────────────────────
         try {
-            $prendasVendidas = (int) Order::whereIn('status', $paid)
+            $prendasVendidas = (int) Order::whereIn('status', $delivered)
                 ->selectRaw('COALESCE(SUM(JSON_LENGTH(items_snapshot)), 0) as total')
                 ->value('total');
         } catch (\Throwable) {
-            $prendasVendidas = Order::whereIn('status', $paid)->count();
+            $prendasVendidas = Order::whereIn('status', $delivered)->count();
         }
 
         // ── Clientes Nuevos ──────────────────────────────────────────
@@ -42,7 +42,7 @@ class BazarStatsOverview extends BaseWidget
         ])->count();
 
         // ── Sparklines (últimos 7 días) ──────────────────────────────
-        $ventasChart   = collect(range(6, 0))->map(fn ($d) => (float) Order::whereIn('status', $paid)->whereDate('created_at', now()->subDays($d))->sum('total_amount'))->toArray();
+        $ventasChart   = collect(range(6, 0))->map(fn ($d) => (float) Order::whereIn('status', $delivered)->whereDate('created_at', now()->subDays($d))->sum('total_amount'))->toArray();
         $prendasChart  = collect(range(6, 0))->map(fn ($d) => Order::whereDate('created_at', now()->subDays($d))->count())->toArray();
         $clientesChart = collect(range(6, 0))->map(fn ($d) => Customer::whereDate('created_at', now()->subDays($d))->count())->toArray();
 
