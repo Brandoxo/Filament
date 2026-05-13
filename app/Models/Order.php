@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
@@ -11,7 +12,10 @@ class Order extends Model
     protected $casts = [
         'shipping_address_snapshot' => 'array',
         'items_snapshot'            => 'array',
+        'carrier_snapshot'          => 'array',
+        'coupon_snapshot'           => 'array',
         'total_amount'              => 'decimal:2',
+        'discount_amount'           => 'decimal:2',
         'status_changed_at'         => 'datetime',
     ];
 
@@ -55,18 +59,33 @@ class Order extends Model
         'other'       => 'Otro',
     ];
 
+    const DELIVERY_MODES = [
+        'parcel'   => 'Paquetería',
+        'personal' => 'Entrega personal',
+    ];
+
     public function canTransitionTo(string $newStatus): bool
     {
         return in_array($newStatus, self::TRANSITIONS[$this->status] ?? [], true);
     }
 
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function shop()
+    public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
+    }
+
+    public function shippingRate(): BelongsTo
+    {
+        return $this->belongsTo(ShippingRate::class);
+    }
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class);
     }
 }

@@ -47,6 +47,9 @@ app/
     Product.php / ProductVariant.php
     Category.php / Look.php / Drop.php / Post.php / Page.php
     Favorite.php / UserAddress.php
+    ShippingCarrier.php      # Paquetería — hasMany ShippingRate
+    ShippingRate.php         # Tarifa de envío — belongsTo ShippingCarrier
+    Coupon.php               # Cupón de descuento — TYPES + isValid() + calculateDiscount()
   Services/
     OrderStatusService.php   # ONLY authorised entry point for changing order status
 database/
@@ -90,6 +93,13 @@ php artisan <command>
 | `status`                  | string            | Default `pending`. See state machine below |
 | `payment_method`          | string, nullable  | Added 2026-05-04. Slug from `PAYMENT_METHODS` |
 | `status_changed_at`       | timestamp, null   | Added 2026-05-04. Set by `OrderStatusService` |
+| `delivery_mode`           | enum              | Added 2026-05-12. `parcel` or `personal`. See `DELIVERY_MODES` |
+| `shipping_rate_id`        | FK → shipping_rates, null | Added 2026-05-12. `nullOnDelete`    |
+| `tracking_number`         | string, nullable  | Added 2026-05-12. Courier tracking code     |
+| `carrier_snapshot`        | json, nullable    | Added 2026-05-12. Carrier+rate data at order time |
+| `coupon_id`               | FK → coupons, null | Added 2026-05-12. `nullOnDelete`          |
+| `discount_amount`         | decimal(10,2)     | Added 2026-05-12. Discount applied. Cast to `decimal:2` |
+| `coupon_snapshot`         | json, nullable    | Added 2026-05-12. Coupon data at order time |
 | `shipping_address_snapshot` | json            | Customer address at purchase time          |
 | `items_snapshot`          | json              | Line items + prices at purchase time       |
 | `created_at` / `updated_at` | timestamps      |                                            |

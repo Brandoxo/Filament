@@ -28,7 +28,7 @@ class RecentOrdersWidget extends BaseWidget
         return $table
             ->query(
                 Order::query()
-                    ->with('customer')
+                    ->with(['customer', 'shippingRate.shippingCarrier', 'coupon'])
                     ->latest()
             )
             ->columns([
@@ -68,6 +68,43 @@ class RecentOrdersWidget extends BaseWidget
                     ->color(fn (string $state): string => Order::STATUS_COLORS[$state] ?? 'gray')
                     ->sortable(),
 
+                TextColumn::make('delivery_mode')
+                    ->label('Entrega')
+                    ->formatStateUsing(fn (?string $state): string => Order::DELIVERY_MODES[$state] ?? ($state ?? '—'))
+                    ->badge()
+                    ->color(fn (?string $state): string => $state === 'personal' ? 'warning' : 'gray')
+                    ->toggleable(),
+
+                TextColumn::make('shippingRate.shippingCarrier.name')
+                    ->label('Paquetería')
+                    ->placeholder('—')
+                    ->toggleable(),
+
+                TextColumn::make('shippingRate.name')
+                    ->label('Tarifa')
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('tracking_number')
+                    ->label('Guía')
+                    ->searchable()
+                    ->copyable()
+                    ->placeholder('—')
+                    ->toggleable(),
+
+                TextColumn::make('coupon.code')
+                    ->label('Cupón')
+                    ->badge()
+                    ->color('info')
+                    ->placeholder('—')
+                    ->toggleable(),
+
+                TextColumn::make('discount_amount')
+                    ->label('Descuento')
+                    ->money('MXN')
+                    ->placeholder('—')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
                     ->label('Fecha de Compra')
                     ->dateTime('d/m/Y H:i')
@@ -88,6 +125,10 @@ class RecentOrdersWidget extends BaseWidget
                 SelectFilter::make('payment_method')
                     ->label('Método de Pago')
                     ->options(Order::PAYMENT_METHODS),
+
+                SelectFilter::make('delivery_mode')
+                    ->label('Modo de Entrega')
+                    ->options(Order::DELIVERY_MODES),
 
                 Filter::make('date_range')
                     ->label('Rango de Fechas')
