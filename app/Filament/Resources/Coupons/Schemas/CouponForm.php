@@ -22,13 +22,7 @@ class CouponForm
                     ->label('Código')
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->maxLength(100)
-                    ->suffixAction(
-                        \Filament\Forms\Components\Actions\Action::make('generate')
-                            ->label('Generar')
-                            ->icon('heroicon-o-arrow-path')
-                            ->action(fn (Set $set) => $set('code', strtoupper(Str::random(8))))
-                    ),
+                    ->maxLength(100),
 
                 Select::make('type')
                     ->label('Tipo de descuento')
